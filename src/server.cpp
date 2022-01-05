@@ -248,9 +248,9 @@ int main(int argc, char *argv[]) {
                                 break;
                             }
                         }
-                        if (file_id != -1 && folders[folder_id].files[file_id].mode != 1)
+                        if (file_id != -1 && folders[folder_id].files[file_id].mode != 0)
                             continue;
-
+                        
                         strcpy(clients[i].wr_name, clients[i].cur_case.buf);
                         if (file_id == -1)
                             folders[folder_id].files.push_back(FILE_STATE(clients[i].wr_name, 2));
@@ -312,8 +312,8 @@ int main(int argc, char *argv[]) {
                             else
                                 log_info(true, "[ERROR] send() error.\n");
                         } else if (clients[i].up_package.len == 0)  {
+                            fclose(clients[i].rd_fd);
                             clients[i].rd_fd = NULL;
-
                             change_file_state(folders, clients[i].name, clients[i].rd_name, 0);
                         } else 
                             clients[i].up_package.mode = -1;
